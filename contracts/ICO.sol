@@ -4,17 +4,15 @@ pragma solidity ^0.8.6;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-// Uncomment this line to use console.log
+
 // import "hardhat/console.sol";
-  // Uncomment this line, and the import of "hardhat/console.sol", to print a log in your terminal
-        // console.log("Unlock time is %o and block timestamp is %o", unlockTime, block.timestamp);
-        
+// console.log("Unlock time is %o and block timestamp is %o", unlockTime, block.timestamp);
+
 contract ICO is ERC20, Ownable {
     constructor() ERC20("HighValueMedicalCargo", "HVMC") {
         _mint(msg.sender, 1000);
     }
 
-    // own burn fnx/.
     function mint(address account, uint256 amount)
         public
         onlyOwner
@@ -23,13 +21,12 @@ contract ICO is ERC20, Ownable {
         // only owner : the deployer of owner can call this
         require(
             account != address(this) && amount != uint256(0),
-            "ERC20: errior"
+            "Try to mint to this contract or amount is 0"
         );
         _mint(account, amount);
         return (true);
     }
 
-    // own burn fnx
     function burn(address account, uint256 amount)
         public
         onlyOwner
@@ -37,13 +34,12 @@ contract ICO is ERC20, Ownable {
     {
         require(
             account != address(this) && amount != uint256(0),
-            "ERC20: errior"
+            "Trying to burn from this contract or amount is 0"
         );
         _burn(account, amount);
         return (true);
     }
 
-    // own withdraw fnx
     function withdraw(uint256 amount) public onlyOwner returns (bool) {
         require(
             amount <= address(this).balance,
