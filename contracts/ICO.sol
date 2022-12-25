@@ -13,11 +13,10 @@ contract ICO is ERC20, Ownable {
         _mint(msg.sender, 1000);
     }
 
-    function mint(address account, uint256 amount)
-        public
-        onlyOwner
-        returns (bool)
-    {
+    function mint(
+        address account,
+        uint256 amount
+    ) public onlyOwner returns (bool) {
         // only owner : the deployer of owner can call this
         require(
             account != address(this) && amount != uint256(0),
@@ -27,17 +26,26 @@ contract ICO is ERC20, Ownable {
         return (true);
     }
 
-    function burn(address account, uint256 amount)
-        public
-        onlyOwner
-        returns (bool)
-    {
+    function burn(
+        address account,
+        uint256 amount
+    ) public onlyOwner returns (bool) {
         require(
             account != address(this) && amount != uint256(0),
             "Trying to burn from this contract or amount is 0"
         );
         _burn(account, amount);
         return (true);
+    }
+
+    function buy() public payable returns (bool) {
+        require(
+            msg.sender.balance >= msg.value && msg.value != 0 ether,
+            "ICO: function buy invalid input"
+        );
+        uint256 amount = msg.value * 1000;
+        _transfer(owner(), _msgSender(), amount);
+        return true;
     }
 
     function withdraw(uint256 amount) public onlyOwner returns (bool) {
@@ -51,3 +59,6 @@ contract ICO is ERC20, Ownable {
         return (true);
     }
 }
+//  Articifacts Fo;der s creatred after compiling the contract
+//  two json file , dbg and (abi&bytecode)
+// =

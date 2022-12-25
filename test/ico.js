@@ -7,7 +7,7 @@
  *  #> truffle test <path/to/this/test.js>
  * 
  * */
-var ICO = artifacts.require("hard_hat_by_examples/contracts/ICO.sol");
+var ICO = artifacts.require("/home/uniris/Documents/apoorv/projects/hard_hat_by_examples/contracts/ICO.sol");
 
 contract('ICO', (accounts) => {
     var creatorAddress = accounts[0];
