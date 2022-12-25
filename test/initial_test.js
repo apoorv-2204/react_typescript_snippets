@@ -1,13 +1,13 @@
 const Chai = require('chai');
-const artifacts =
+const { ethers } = require('hardhat');
 
-    describe("ICO -Erc20 Tesing", describe_tests);
+describe("ICO -Erc20 Tesing", describe_tests);
 
 function describe_tests() {
     let icoContract;
     let accounts;
     // string to (ethers/ wei)
-    const amount = ethers.utils.parseEthers("1");
+    const amount = ethers.utils.parseEther("1");
 
     before(async () => {
         /* before describe, execute contract
@@ -32,7 +32,18 @@ function describe_tests() {
         await icoContract.deployed();
     });
 
-    it("Assgin initial balance", async () => {
+    it("Owner should have all initial funds", async () => {
+        // read total supply from contract
         const totalSupply = await icoContract.totalSupply();
+        // accounts[0] is the first account in the list of accounts or the owner
+        Chai.expect(await icoContract.balanceOf(accounts[0].address)).to.equal(totalSupply);
+    });
+
+    it("SHould have expected name and symbol of Token", async () => {
+        const tokenName = (await icoContract.name());
+        Chai.expect(tokenName).to.equal("HighValueMedicalCargo");
+        (icoContract.symbol()).then((symbol) => {
+            Chai.expect(symbol).to.equal("HVMC");
+        });
     });
 }
