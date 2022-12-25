@@ -46,4 +46,11 @@ function describe_tests() {
             Chai.expect(symbol).to.equal("HVMC");
         });
     });
+
+    it("Only Owner can mint tokens", async () => {
+        const wallet = icoContract.connect(accounts[2]);
+        await Chai.expect(wallet.mint(accounts[2].address, amount)).to.be.revertedWith("Ownable: caller is not the owner");
+    });
+
+
 }
