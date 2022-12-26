@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.3;
+pragma solidity ^0.8.6;
 
 //https://blog.soliditylang.org/2020/03/26/fallback-receive-split/
 

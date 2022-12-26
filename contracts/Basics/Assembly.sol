@@ -11,13 +11,13 @@ contract _Assembly {
     }
 
     function assemblyLoop() public {
-        assembly {
-            let i := 0
+        // assembly {
+        //     let i := 0
 
-        loop:
-            i := add(i, 1)
-            jump(loop, lt(i, 1))
-            //label condition lssthan
-        }
+        // loop :
+        //     i := add(i, 1)
+        //     jump(loop, lt(i, 1))
+        //     //label condition lssthan
+        // }
     }
 }

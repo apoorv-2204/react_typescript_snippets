@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
-pragma solidity 0.8.3;
+pragma solidity ^0.8.6;
 
 //they were able to create extra tokens
 contract moneroGoldscam {
