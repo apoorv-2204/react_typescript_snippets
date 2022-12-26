@@ -10,7 +10,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract ICO is ERC20, Ownable {
     constructor() ERC20("HighValueMedicalCargo", "HVMC") {
-        _mint(msg.sender, 1000);
+        _mint(msg.sender, 10000 * (10 ** uint256(decimals())));
     }
 
     function mint(

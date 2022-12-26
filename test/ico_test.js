@@ -1,13 +1,13 @@
-const Chai = require('chai');
+const { expect } = require('chai');
 const { ethers } = require('hardhat');
 
-describe("ICO -Erc20 Tesing", describe_tests);
+describe("ICO -Erc20 Testing", describe_tests);
 
 function describe_tests() {
     let icoContract;
     let accounts;
     // string to (ethers/ wei)
-    const amount = ethers.utils.parseEther("1");
+    const oneEthAmount = ethers.utils.parseEther("1");
 
     before(async () => {
         /* before describe, execute contract
@@ -36,21 +36,41 @@ function describe_tests() {
         // read total supply from contract
         const totalSupply = await icoContract.totalSupply();
         // accounts[0] is the first account in the list of accounts or the owner
-        Chai.expect(await icoContract.balanceOf(accounts[0].address)).to.equal(totalSupply);
+        expect(await icoContract.balanceOf(accounts[0].address)).to.equal(totalSupply);
     });
 
     it("SHould have expected name and symbol of Token", async () => {
         const tokenName = (await icoContract.name());
-        Chai.expect(tokenName).to.equal("HighValueMedicalCargo");
+        expect(tokenName).to.equal("HighValueMedicalCargo");
         (icoContract.symbol()).then((symbol) => {
-            Chai.expect(symbol).to.equal("HVMC");
+            expect(symbol).to.equal("HVMC");
         });
     });
 
     it("Only Owner can mint tokens", async () => {
         const wallet = icoContract.connect(accounts[2]);
-        await Chai.expect(wallet.mint(accounts[2].address, amount)).to.be.revertedWith("Ownable: caller is not the owner");
+        await expect(wallet.mint(accounts[2].address, oneEthAmount)).to.be.revertedWith("Ownable: caller is not the owner");
     });
 
+    it("Only Owner can burn tokens", async () => {
+        const wallet = icoContract.connect(accounts[2]);
+        await expect(wallet.burn(accounts[2].address, oneEthAmount)).to.be.revertedWith("Ownable: caller is not the owner");
+    });
 
+    it("Buy token from ICO", async () => {
+        const account3ConnToContract = icoContract.connect(accounts[3]);
+        await account3ConnToContract.buy({
+            value: oneEthAmount.mul(1)
+        });
+
+        expect(await account3ConnToContract.balanceOf(accounts[3].address) / 10 ** 18).to.equal(1000);
+
+        expect(await account3ConnToContract.balanceOf(accounts[0].address) / 10 ** 18).to.equal(9000);
+    });
+
+    it("Only Owner Can withdraw funds", async () => {
+        const account5ConnToContract = icoContract.connect(accounts[5]);
+        // feature of chain, .to.be reverted
+        await expect(account5ConnToContract.withdraw(oneEthAmount)).to.be.revertedWith("Ownable: caller is not the owner");
+    });
 }
