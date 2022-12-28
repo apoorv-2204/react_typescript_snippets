@@ -1,6 +1,32 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.6;
 
+contract Day13 {
+    function reverseDigit(uint256 n) public pure returns (uint256) {
+        uint256 reverse = 0;
+        uint256 temp = n;
+        while (temp != 0) {
+            reverse = (reverse * 10) + (temp % 10);
+            
+            temp = temp / 10;
+        }
+        return reverse;
+    }
+}
+
+contract Day12 {
+    function palindrome(uint256 n) public pure returns (uint256) {
+        uint256 reverse = 0;
+        uint256 temp = n;
+        while (temp != 0) {
+            reverse = (reverse * 10) + (temp % 10);
+            temp = temp / 10;
+        }
+        if (reverse == n) return 1;
+        else return 0;
+    }
+}
+
 contract Function {
     uint256 public stateVariable;
 
