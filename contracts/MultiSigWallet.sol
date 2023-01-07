@@ -11,8 +11,8 @@ contract MultiSigWallet {
         uint256 value, //msg .value
         bytes data // extra data
     );
-    // indeexde for filter in logs
-    //
+
+    // index for filter in logs
     event ConfirmTransaction(address indexed owner, uint256 indexed txIndex);
     event RevokeTransaction(address indexed owner, uint256 indexed txIndex);
     event ExecuteTransaction(address indexed owner, uint256 indexed txIndex);
@@ -80,7 +80,9 @@ contract MultiSigWallet {
         emit Deposit(msg.sender, msg.value, address(this).balance);
     }
 
-    function confirmTransaction(uint256 _txIndex)
+    function confirmTransaction(
+        uint256 _txIndex
+    )
         public
         onlyOwner
         txExists(_txIndex)
@@ -112,12 +114,9 @@ contract MultiSigWallet {
         emit SubmitTransaction(msg.sender, txIndex, _to, _value, _data);
     }
 
-    function executeTransaction(uint256 _txIndex)
-        public
-        onlyOwner
-        txExists(_txIndex)
-        notExecuted(_txIndex)
-    {
+    function executeTransaction(
+        uint256 _txIndex
+    ) public onlyOwner txExists(_txIndex) notExecuted(_txIndex) {
         Transaction storage transaction = transactions[_txIndex];
         require(
             transaction.numConfirmations >= numConfirmationsRequired,
@@ -131,12 +130,9 @@ contract MultiSigWallet {
         emit ExecuteTransaction(msg.sender, _txIndex);
     }
 
-    function revokeConfirmation(uint256 _txIndex)
-        public
-        onlyOwner
-        txExists(_txIndex)
-        notExecuted(_txIndex)
-    {
+    function revokeConfirmation(
+        uint256 _txIndex
+    ) public onlyOwner txExists(_txIndex) notExecuted(_txIndex) {
         Transaction storage transaction = transactions[_txIndex];
         require(isConfirmed[_txIndex][msg.sender], "tx is not confirmed");
         transaction.numConfirmations -= 1;
@@ -153,7 +149,9 @@ contract MultiSigWallet {
         return transactions.length;
     }
 
-    function getTransaction(uint256 _txIndex)
+    function getTransaction(
+        uint256 _txIndex
+    )
         public
         view
         returns (
