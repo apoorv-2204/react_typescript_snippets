@@ -1,57 +1,40 @@
+// SPDX-License-Identifier: GPL-3.0
+
 pragma solidity >0.8.6;
 
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 // import "openzeppelin-solidity-2.3.0/contracts/token/ERC20/ERC20Detailed.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 // Inheritance
 import "@openzeppelin/contracts/security/Pausable.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 // import "./interfaces/IStakingRewards.sol";
 // import "./RewardsDistributionRecipient.sol";
-// SPDX-License-Identifier: GPL-3.0
 
 error TransferFailed();
 error NeedsMoreThanZero();
 
-contract Staking is ReentrancyGuard {
+contract Staking is ReentrancyGuard, Pausable {
     /* ========== STATE VARIABLES ========== */
-    // it will cater to only onw token
-    //  chainlink for multiple tokens
-    // s_ means its in storage
-    IERC20 public s_stakingToken;
+
     IERC20 public s_rewardsToken;
-    // bassis point
-    // minimal  rate  change
-    // 1bp minimal change in interst rate
-    // in INdia it is 0.01
-    //  1basis point is 0.01%
-    // 1 bp = 0.01%
-    // 200bp = 2%
+    IERC20 public s_stakingToken;
 
-    // this is reward token per second
-
-    uint256 public constant REWARD_RATE = 100;
+    uint256 public constant REWARD_RATE = 100 seconds; // this is reward token per second
     uint256 public s_lastUdateTime;
     uint256 public s_rewardPerTokenStored;
 
     mapping(address => uint256) public s_userRewardPerTokenPaid;
-    // total rewards
-    mapping(address => uint256) public s_rewards;
-
-    mapping(address => uint256) public s_balances;
+    mapping(address => uint256) public s_rewards; // total rewards
     uint256 private s_totalSuply;
-
-    event Staked(address indexed user, uint256 indexed amount);
-    // multi token staking contract
-    event withdrewnStake(address indexed user, uint256 indexed amount);
-    event RewardsClaimed(address indexed user, uint256 indexed amount);
+    mapping(address => uint256) public s_balances;
 
     /* ========== CONSTRUCTOR ========== */
 
-    // interface, to write own code custom function
     constructor(address stakingToken, address rewardsToken) {
+        // interface, to write own code custom function
         s_stakingToken = IERC20(stakingToken);
         s_rewardsToken = IERC20(rewardsToken);
     }
@@ -63,6 +46,10 @@ contract Staking is ReentrancyGuard {
     }
 
     function balanceOf(address account) external view returns (uint256) {
+        return s_balances[account];
+    }
+
+    function getStakedAmount(address account) public view returns (uint) {
         return s_balances[account];
     }
 
@@ -96,8 +83,8 @@ contract Staking is ReentrancyGuard {
         external
         nonReentrant
         notPaused
-        updateReward(msg.sender)
         moreThanZero(amount)
+        updateReward(msg.sender)
     {
         // does order of modifiers matter?
         s_totalSuply += amount;
@@ -137,6 +124,11 @@ contract Staking is ReentrancyGuard {
         }
     }
 
+    function exit() external {
+        withdraw(_balances[msg.sender]);
+        claimReward();
+    }
+
     // agends
     // modifiers 7-1-23
     // retrancy guard
@@ -150,6 +142,8 @@ contract Staking is ReentrancyGuard {
     // percentage_staked * duration * reward per duration
     // depends on supply and demand
     // total_tokens = staked tokens +  percentage_staked * duration * reward per duration
+
+    /* ========== MODIFIERS ========== */
 
     modifier updateReward(address account) {
         s_rewardPerTokenStored = rewardsPerToken();
@@ -168,46 +162,61 @@ contract Staking is ReentrancyGuard {
         _;
     }
 
-    function getStakedAmount(address account) public view returns (uint) {
-        return s_balances[account];
-    }
-    // reentrancy guard? im portatnt for inteveris
-    // very dangerous completely drain sc balancnce
-    // expolot fallback function loop hole
+    /* ========== Events ========== */
 
-    // In reentracy attack a SC function makes an external call to
-    // untrusted sc.
-    // there time b/w function call and state transisition
-    // recursive call to withdraw
-
-    // SC make call A
-    // untrusted sc B
-    // where SC A fails to update its state before sneding funds
-    // B can continously call withdraw function to drain A's funds
-    // no way to know b is malicious
-
-    // contrat A
-    // scehcking sc balance
-    // sending funds
-    // update balance
-
-    // contract B
-    // fallback function
-
-    // reentracy scenario
-    // 1) A - > 10 ethers
-    // 2) B -> stake, deposit 1 ether in A
-    // time lag b/w 2 and 3
-    // 3 ) attacker => will call A's withdraw fucntion  and points to malicious recipent/contract
-    //   recipient is malicious recipient contract b
-    // 4) A's withdraw function will verify ezxecution,
-    //   -A does attacker has one 1 ether bal -> yes
-    //  A -> tranfer 1 eth to B( attacker bal not updated yet)
-    // fallback function => fallback on ,recived eth call withdraw call again
-    //      it fallback function on reveice again call same function
-    // so pexectuion is never comleted so no state updation
-
-    // it could have been avoided if balnce was updated before??
-    // ? advantage of operation delay
-    // execution stack never returned?
+    event Staked(address indexed user, uint256 indexed amount);
+    event withdrewnStake(address indexed user, uint256 indexed amount); // multi token staking contract
+    event RewardsClaimed(address indexed user, uint256 indexed amount);
 }
+// notes
+// bassis point
+// minimal  rate  change
+// 1bp minimal change in interst rate
+// in INdia it is 0.01
+//  1basis point is 0.01%
+// 1 bp = 0.01%
+// 200bp = 2%
+
+// it will cater to only onw token
+//  chainlink for multiple tokens
+// s_ means its in storage
+
+// reentrancy guard? im portatnt for inteveris
+// very dangerous completely drain sc balancnce
+// expolot fallback function loop hole
+
+// In reentracy attack a SC function makes an external call to
+// untrusted sc.
+// there time b/w function call and state transisition
+// recursive call to withdraw
+
+// SC make call A
+// untrusted sc B
+// where SC A fails to update its state before sneding funds
+// B can continously call withdraw function to drain A's funds
+// no way to know b is malicious
+
+// contrat A
+// scehcking sc balance
+// sending funds
+// update balance
+
+// contract B
+// fallback function
+
+// reentracy scenario
+// 1) A - > 10 ethers
+// 2) B -> stake, deposit 1 ether in A
+// time lag b/w 2 and 3
+// 3 ) attacker => will call A's withdraw fucntion  and points to malicious recipent/contract
+//   recipient is malicious recipient contract b
+// 4) A's withdraw function will verify ezxecution,
+//   -A does attacker has one 1 ether bal -> yes
+//  A -> tranfer 1 eth to B( attacker bal not updated yet)
+// fallback function => fallback on ,recived eth call withdraw call again
+//      it fallback function on reveice again call same function
+// so pexectuion is never comleted so no state updation
+
+// it could have been avoided if balnce was updated before??
+// ? advantage of operation delay
+// execution stack never returned?
