@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.3;
+pragma solidity ^0.8.6;
 
 contract EcommerceStore {
     //tolocate product
@@ -301,30 +301,21 @@ contract EcommerceStore {
 
 // truffle(development)>|| current_time = Math.round(new Date() / 1000);//current epoch
 
-
 // truffle(development)>|| EcommerceStore.deployed().then(function(instance) { obj = instance })
 
-
-// truffle(development)>|| 
+// truffle(development)>||
 // obj.addProductToStore('iphone 6', 'Cell Phones & Accessories', 'imagelink', 'desclink', current_time,current_time + 200, amt_1, 0).then(function(f){console.log(f)});
-
-
-
 
 // truffle(development)>|| obj.getProduct.call(1).then(function(f) {console.log(JSON.stringify(f))})
 
 // truffle(development)>|| Eutil = require('ethereumjs-util');
 
-
 // web3.utils.keccak256(string)
 
 // truffle(development)>|| sealedBid = '0x' + Eutil.keccak256((2 * amt_1) + 'mysecretacc1').toString('hex');
 
-
 // truffle(development)>|| obj.bid(1, sealedBid, {value: 3*amt_1, from: web3.eth.accounts[1]}).then(function(f) {console.log(f)});
 // truffle(development)>|| obj.bid(1, sealedBid, {value: 3*amt_1, from: web3.eth.accounts[1]}).then(function(f) {console.log(JSON.stringify(f))});
-
-
 
 // truffle(development)>|| sealedBid = 'Ox' + Eutil.sha3((3 * amt_1) + 'mysecretacc2').toString('hex');
 // truffle(development)>|| obj.bid(1, sealedBid, {value: 4*amt_1, from: web3.eth.accounts[2]}).then(function(f) {console.log(f)});

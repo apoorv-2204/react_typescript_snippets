@@ -20,7 +20,23 @@
     "react-scripts": "5.0.1",
     "react-toastify": "^9.1.1",
     "reactstrap": "^9.1.5",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "@nomicfoundation/hardhat-toolbox": "^2.0.0",
+    "@nomiclabs/hardhat-ethers": "^2.2.1",
+    "dotenv": "^16.0.3",
+    "ethers": "^5.7.2",
+    "hardhat": "^2.12.5",
+    "hardhat-contract-sizer": "^2.6.1",
+    "hardhat-deploy": "^0.11.22",
+    "hardhat-deploy-ethers": "^0.3.0-beta.13",
+    "hardhat-gas-reporter": "^1.0.9",
+    "magic-sdk": "^13.1.0",
+    "prettier": "^2.8.2",
+    "prettier-plugin-solidity": "^1.1.1",
+    "react-moralis": "^1.4.2",
+    "solhint": "^3.3.7",
+    "solidity-coverage": "^0.8.2",
+    "yarn": "^1.22.19"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -52,6 +68,8 @@
     "@nomicfoundation/hardhat-toolbox": "^2.0.0",
     "ethers": "^5.7.2",
     "hardhat": "^2.12.4",
-    "hardhat-gas-reporter": "^1.0.9"
+    "hardhat-gas-reporter": "^1.0.9",
+    "@nomicfoundation/hardhat-chai-matchers": "^1.0.5",
+    "@nomiclabs/hardhat-etherscan": "^3.1.4"
   }
 }

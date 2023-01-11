@@ -1,54 +1,35 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.3;
+pragma solidity ^0.8.6;
 
-contract AZ
-{
-
+contract AZ {
     uint public num;
 
-    constructor()  
-    {
+    constructor() {
         num = 10;
     }
 
-    modifier check(uint _num2)
-    {
-        if(_num2 >= 5)
-        {
+    modifier check(uint _num2) {
+        if (_num2 >= 5) {
             _;
         }
     }
 
-    function update(uint _num) public check(_num) 
-    {
-        
+    function update(uint _num) public check(_num) {
         num = num + _num;
-      
     }
-
-
 }
 
-
-
-
-// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.3;
 
-
-contract Account
-{
-    mapping(address => uint)  balance;
+contract Account {
+    mapping(address => uint) balance;
     address public owner;
 
-    constructor()
-    {
+    constructor() {
         owner = msg.sender;
     }
 
-    function addBalance(uint amt) public
-    {
-
+    function addBalance(uint amt) public {
         //
         //
         require(msg.sender == owner, "Stay in your limit");
@@ -60,59 +41,40 @@ contract Account
         assert(c == 9);
 
         balance[msg.sender] += amt + c;
-
     }
 
-    function getBalance() public view returns (uint)
-    {
+    function getBalance() public view returns (uint) {
         return balance[msg.sender];
     }
 
-    function transfer(address to, uint amount) public
-    {
-       
+    function transfer(address to, uint amount) public {
         // if(balance[msg.sender] < amount)
         //     revert("You dont have enough balance");
 
-        require(balance[msg.sender]>amount, "Insuffienct Balance");
-        
+        require(balance[msg.sender] > amount, "Insuffienct Balance");
+
         balance[msg.sender] -= amount;
         balance[to] += amount;
-        
     }
 }
 
-// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.3;
 
-contract A
-{
-    function doSomething() external 
-    {
+contract A {
+    function doSomething() external {
         //assert();
     }
 }
-contract B
-{
-    A a = new A();
-    string public status="Not available";
 
-    function go() public
-    {
-        try a.doSomething()
-        {
+contract B {
+    A a = new A();
+    string public status = "Not available";
+
+    function go() public {
+        try a.doSomething() {
             status = "Success";
-        } 
-        catch 
-        {
+        } catch {
             status = "Failed";
         }
-
-       
-        
-        
     }
 }
-
-
-

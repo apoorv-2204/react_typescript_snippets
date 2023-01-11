@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0
 
-pragma solidity >0.8.6;
+pragma solidity ^0.8.6;
 
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
@@ -41,9 +41,9 @@ contract Staking is ReentrancyGuard, Pausable {
 
     /* ========== VIEWS ========== */
 
-    function totalSupply() external view returns (uint256) {
-        return _totalSupply;
-    }
+    // function totalSupply() external view returns (uint256) {
+    //     return totalSupply;
+    // }
 
     function balanceOf(address account) external view returns (uint256) {
         return s_balances[account];
@@ -79,13 +79,7 @@ contract Staking is ReentrancyGuard, Pausable {
 
     function stake(
         uint256 amount
-    )
-        external
-        nonReentrant
-        notPaused
-        moreThanZero(amount)
-        updateReward(msg.sender)
-    {
+    ) external nonReentrant moreThanZero(amount) updateReward(msg.sender) {
         // does order of modifiers matter?
         s_totalSuply += amount;
         s_balances[msg.sender] += amount;
@@ -124,10 +118,10 @@ contract Staking is ReentrancyGuard, Pausable {
         }
     }
 
-    function exit() external {
-        withdraw(_balances[msg.sender]);
-        claimReward();
-    }
+    // function exit() external {
+    //     withdraw(_balances[msg.sender]);
+    //     claimReward();
+    // }
 
     // agends
     // modifiers 7-1-23
