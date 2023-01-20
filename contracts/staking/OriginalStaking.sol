@@ -3,6 +3,8 @@ pragma solidity ^0.8.6;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/security/PullPayment.sol";
+import "@openzeppelin/contracts/security/Pausable.sol";
 
 error TransferFailed();
 error NeedsMoreThanZero();

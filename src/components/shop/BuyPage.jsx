@@ -3,7 +3,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useState, useEffect } from 'react';
 // import { toast } from 'react-toastify';
 import Axios from 'axios';
-import { Container, Row, Col } from 'reactstrap';
+import { Container } from 'reactstrap';
 import { faker } from '@faker-js/faker';
 
 import Shop from './Shop';
@@ -21,7 +21,6 @@ export default function BuyPage({ addInCart }) {
                 Authorization: API_KEY,
             },
         });
-        console.log(data);
 
         const allProducts = data.photos.map((photo) => {
             return {

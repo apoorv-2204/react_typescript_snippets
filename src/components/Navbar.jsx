@@ -15,7 +15,7 @@ function CustomNavBar() {
                             <NavDropdown title="Basics" id="collasible-nav-dropdown">
 
                                 <NavDropdown.Item href="/basics/use_state_counter">use_state_counter</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.2"> Another action </NavDropdown.Item>
+                                <NavDropdown.Item href="/basics/use_effect"> Use Effect</NavDropdown.Item>
                                 <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
                                 <NavDropdown.Divider />
                                 <NavDropdown.Item href="#action/3.4">
