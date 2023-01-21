@@ -1,4 +1,6 @@
 ### Variables and Literals
+https://www.youtube.com/watch?v=VRK2rLFPU0o
+
 In Solidity, variables can be of different types, including:
 
 - Integer types: `uint8`, `uint16`, `uint32`, `uint64`, `uint128`, `int8`, `int16`, `int32`, `int64`, `int128`. These are used to represent whole numbers.
@@ -155,4 +157,87 @@ if other users wan to use it, like LRU on content on network
 - yes please sir shae addvance conspcets pdf
 -sir cant find video where contracct to contract calls
 -pusable
+
+## NFT
+ - two nft cant be of same value
+### 721 tracks and transfer funtions used
+- IERC721 interface represent ownership & mechanism of nft
+
+- ownerOf(token_id) returns the owner of the nft
+
+- SafeTransferfrom()  
+    - transferFroM() 
+    - owner operator and buyer
+    - temp custody of nft to make a sell on your behalf
+
+1) time difference between minting the nft, and being sold
+2) someone has to market and sell it , agent 
+3) like allowance in erc20
+4) we allow operator to sell
+5) Minting need to be marketed,  
+6) three actors owner, spender, and to, amount
+
+- apporve(address, tokenID)
+1) owner (digital m )
+2) we can apporv a single token to operator
+3) approve only one token at time
+
+- setApprovalForAll(address ofoeprator/marketplace, bool) (fir maketplace/operator)
+  1) set apporval for all nft
+
+- isApprovedForAll(owner,operator)
+
+
+-balanceOf
+### 
+- 1 token => 10^18 subtoken
+- 1erc20 tokens => 10^18 subunits
+- erc721 1TOken =>1 subunit( 1nft =1wei_) odecimals
+
+
+https://github.com/OpenZeppelin/openzeppelin-contracts-upgradeable/blob/v4.8.1/contracts/utils/CountersUpgradeable.sol
+https://docs.openzeppelin.com/contracts/4.x/wizard
+
+## NFt marketplace contract
+- functions
+1) Listing fees: 
+  - recieves commision on sale of nft
+  - 0.0001
+  - royalty scheme
+2) function createNewNFT() reentracyguard
+  - nft input from ui 
+  - mint the nft
+  - on home page show new minted nft
+3) create a sale of nft
+  -  sell nft to buyer from marketplace (SC)
+  -  
+4) fetch all nft listed in marketplace
+  - list nft that can be bought  
+  - NFTminted - NFTs already sold
+  - sold item need to t has to relisted
+5) fecht nft owned by a address
+  
+6) fetch all nfts created by a creator
+
+- tools
+   - tetsing => chai
+   - deployment -> HH + ethers
+   - frontend => react
+   - blockchain => mumbai testnet
+   - task =>.
+
+- ui
+
+
+- address 0 bevause its has no owner
+as in strcut by deafult values
+to in constructor?to 0x0
+how do we track event from ui??
+price to list item on the market?
+
+
+
+we can only create static size array in memoery for structs
+actually we never discussed how reentrancy guard resolves the situation of reentrancy attack
+## ui is not dentralised
 
