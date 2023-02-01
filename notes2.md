@@ -32,6 +32,18 @@ https://matic-mumbai.chainstacklabs.com
 chainid: mumbai testnet
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 ### CTC
 You are correct that IERC20 is an interface in Solidity, which means it is not a contract that can be instantiated on its own.<br>
  However, the IERC20() constructor takes an address of an already deployed ERC-20 contract as its argument. When the IERC20() <br>
@@ -141,3 +153,18 @@ find who did it how they did it publish ariticle and do reverse engineering
 social enginerring, gather real info expose them 
 gather all proof to being them to scrutiny
 
+
+
+
+error in contract of NFt
+t public: I
+uint256 price
+. price;
+uint2Sb tokenld - . tokenldi
+nr.p..va1UC' priie,
+"please submit the asking price in order to coaplete the purchase"
+image.pngimage.png
+
+fucntion createMarketSale(address nftCOntract,uint item iD)
+uint price = idToMarketItem[itemID].price;
+uint tokenid =idToMakrteItem[itemId].tokenID;
