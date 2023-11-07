@@ -1,5 +1,3 @@
-import './App.css'
-
 
 import '@css/App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -9,9 +7,8 @@ import { Hook, Console, Decode } from "console-feed"
 import { Message } from "console-feed/lib/definitions/Component"
 
 
-import CustomNavBar from './components/navbar';
-// import { UseRefDemo } from "./hooks/index";
-import UseEffectDemo from './hooks/useEffectDemo';
+import CustomNavBar from '@components/navbar.tsx';
+import UseEffectDemo from '@hooks/useEffectDemo';
 
 
 // https://dev.to/luispa/captures-console-log-s-into-a-react-component-dmm
