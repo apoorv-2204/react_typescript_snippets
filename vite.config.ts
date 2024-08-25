@@ -1,19 +1,21 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import path from 'path';
-
+console.log(__dirname)
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './'),
-      '@api': path.resolve(__dirname, './src/services/api'),
-      '@utils': path.resolve(__dirname, './src/utils'),
-      '@css': path.resolve(__dirname, './src/css'),
-      '@assets': path.resolve(__dirname, './src/assets'),
-      '@hooks': path.resolve(__dirname, './src/hooks'),
-      '@components': path.resolve(__dirname, './src/components')
+      '@api': path.resolve(__dirname, 'src/services/api'),
+      '@utils': path.resolve(__dirname, 'src/utils'),
+      '@css': path.resolve(__dirname, 'src/css'),
+      '@assets': path.resolve(__dirname, 'src/assets'),
+      '@hooks': path.resolve(__dirname, 'src/hooks'),
+      '@components': path.resolve(__dirname, 'src/components')
     },
+  },server: {
+    hmr: false, 
   },
 })
